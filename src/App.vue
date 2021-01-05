@@ -120,9 +120,13 @@ li {
 
 /* Medium devices (landscape tablets, 768px and up) */
 @media only screen and (min-width: 768px) {
-  .images-wrapper img {
-    height: 45vh;
+  .images-wrapper {
+  display: grid;
+  width: 100%;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 2%;
   }
+
 }
 
 /* Large devices (laptops/desktops, 992px and up) */
@@ -133,10 +137,7 @@ li {
   grid-template-columns: repeat(3, 1fr);
   grid-gap: 2%;
   }
-  .random-pic img{
-  width: 50vw;
-  object-fit: cover;
-  }
+
 }
 
 /* Extra large devices (large laptops and desktops, 1200px and up) */
