@@ -7,7 +7,7 @@ import axios from 'axios'
 Vue.use(Vuex)
 Vue.use(VueAxios, axios)
 
-export default new Vuex.Store({
+const store = new Vuex.Store({
   // state stores the data from the API
   state: {
     breeds: Array<any>(), 
@@ -134,3 +134,5 @@ export default new Vuex.Store({
   modules: {
   }
 })
+
+export {store} 

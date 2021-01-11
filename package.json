@@ -5,11 +5,14 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "sitemap": "vue-cli-service sitemap"
   },
   "dependencies": {
+    "@vue/eslint-config-prettier": "^6.0.0",
     "axios": "^0.21.1",
     "core-js": "^3.6.5",
+    "esm": "^3.2.25",
     "vue": "^2.6.11",
     "vue-axios": "^3.2.0",
     "vue-class-component": "^7.2.3",
@@ -19,6 +22,7 @@
     "vuex": "^3.4.0"
   },
   "devDependencies": {
+    "@types/node": "^14.14.20",
     "@typescript-eslint/eslint-plugin": "^2.33.0",
     "@typescript-eslint/parser": "^2.33.0",
     "@vue/cli-plugin-babel": "~4.5.0",
@@ -32,7 +36,9 @@
     "eslint-plugin-vue": "^6.2.2",
     "sass": "^1.19.0",
     "sass-loader": "^8.0.0",
+    "sitemap-webpack-plugin": "^1.0.0",
     "typescript": "~3.9.3",
+    "vue-cli-plugin-sitemap": "~2.3.0",
     "vue-cli-plugin-vuetify": "~2.0.8",
     "vue-template-compiler": "^2.6.11",
     "vuetify-loader": "^1.3.0"
