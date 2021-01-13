@@ -1,5 +1,9 @@
 <template>
   <div class="main">
+    <div class="breed-image">
+      <img :src="selectedBreed.image.url" />
+    </div>
+    <!-- / Show breed's image -->
     <div>
       <v-chip>
         <v-avatar>
@@ -15,10 +19,7 @@
       <v-chip v-if="selectedBreed.short_legs == 1">Short Legs</v-chip>
       <v-chip v-if="selectedBreed.hypoallergenic == 1">Hypoallergenic</v-chip>
     </div>
-    <!-- show the original country and the main characteristic of the breed -->
-    <div class="breed-image">
-      <img :src="selectedBreed.image.url" />
-    </div>
+    <!-- / Show the original country and the main characteristic of the breed -->
     <div class="breed-description">
       <h3 class="headline mb-0">{{ selectedBreed.name }}</h3>
       <div>{{ selectedBreed.description }}</div>
@@ -27,7 +28,7 @@
         <i>{{ selectedBreed.temperament }}</i>
       </div>
     </div>
-    <!-- show the image of the breed -->
+    <!-- / Breed's description -->
     <v-list>
       <v-list-item>
         <v-list-item-content>
@@ -182,7 +183,7 @@
         </v-list-item-action>
       </v-list-item>
     </v-list>
-    <!-- show the ratings of the selected breed -->
+    <!-- Show the ratings of the selected breed -->
     <div class="other-breeds">
       <h1>Other breeds</h1>
       <div class="images-wrapper">
@@ -193,7 +194,7 @@
         </li>
       </div>
     </div>
-    <!-- show 3 related items -->
+    <!-- Show 3 related items -->
   </div>
 </template>
 
@@ -211,9 +212,11 @@ export default class Detail extends Vue {
   mounted() {
     this.$store.dispatch("getRelatedPics", this.selectedBreed.id);
   }
+
   get relatedPics() {
     return this.$store.state.relatedPics;
   }
+  // get the image of the country flag from external library
   get countryFlagURL() {
     console.log(this.selectedBreed.country_code.toLowerCase());
     return `https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.5.0/flags/1x1/${this.selectedBreed.country_code.toLowerCase()}.svg`;

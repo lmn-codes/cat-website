@@ -17,8 +17,9 @@ import { Component, Vue } from "vue-property-decorator";
 @Component
 export default class Category extends Vue {
   mounted() {
-    this.$store.dispatch("getSelectedCateoryPictures", this.$route.params.id);
+    this.$store.dispatch("getSelectedCategoryPictures", this.$route.params.id);
   }
+  
   get catPics() {
     return this.$store.state.selectedCategoryPictures;
   }

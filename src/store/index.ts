@@ -17,24 +17,36 @@ const store = new Vuex.Store({
     randomPic: Array<any>()
   },
   getters: {
+    // a breed on Home page is selected
     breed: (state) => (id: number) => {
-      // find the breed based on the id passed 
+      // find the breed based on the id passed for its details
         return state.breeds.find(b => b.id == id)
     },
   },
   // mutations change the state
   mutations: {
-    // random sort the API getBreeds results
-    // populate the breeds array with the first 10 elements of the sorted array
+    // populate the categories array 
+    setCategories(state, categories) {
+      state.categories = categories
+    },
+    // populate the breeds array 
     setBreeds(state, breeds) {
       state.breeds = breeds
     }, 
-    // affection level low to high 
-    sortBreeds (state) {
-      state.breeds.sort(function(a, b){
+    sortBreeds (state, command) {
+      // affection level low to high 
+      if (command === "affectionASC") {
+        state.breeds.sort(function(a, b){
         return a.affection_level - b.affection_level 
-      });
+        });
+      // affection level high to low 
+      } else if (command === "affectionDESC") {
+        state.breeds.sort(function(a, b){
+          return b.affection_level - a.affection_level
+        });
+      }
     },
+    // randomly pick 3 other breeds to show as relevant items
     setRelatedPics(state, id){
       // remove the selected breed and the elements whose image is undefined
       // to ensure there are 3 relevant items shown  
@@ -48,40 +60,18 @@ const store = new Vuex.Store({
       }
       state.relatedPics = temp.slice(0, 3)
     },
-    // populate the breeds array 
-    setCategories(state, categories) {
-      state.categories = categories
-    },
+    // populate the selectedCategoryPictures array
     setSelectedCatPics(state, selectedCatPics) {
       state.selectedCategoryPictures = selectedCatPics
-      console.log(state.selectedCategoryPictures)
     },
+    // set the random cat picture
     setRandomPic(state, randomPic) {
       state.randomPic = randomPic
-      console.log(state.randomPic)
     }
   },
   // actions commit mutations
   actions: {
-    // breeds: GET request 
-    async getBreeds ({commit}) {
-      console.log("getting the breeds");
-      const BASE_URL = 'https://api.thecatapi.com/v1/breeds/';
-      try {
-        await axios.get(BASE_URL, {
-          headers: {
-            'x-api-key' : "a8c4e83f-8094-47a5-be11-0b4f9cf386cd" 
-          }
-        }). then(resp => commit('setBreeds', resp.data)
-        );
-      } catch (exception) {
-        throw new Error(`API ${exception}`);
-    }
-    },
-    getRelatedPics ({commit}, id) {
-      commit('setRelatedPics', id)
-    },
-    //categories: GET request 
+    // categories: GET request -> pass to setCategories mutation
     async getCategories ({commit}) {
       console.log("getting the categories");
       const BASE_URL = 'https://api.thecatapi.com/v1/categories/';
@@ -96,7 +86,31 @@ const store = new Vuex.Store({
         throw new Error(`API ${exception}`);
     }
     },
-    async getSelectedCateoryPictures({commit}, id) {
+    // breeds: GET request -> pass to setBreeds mutation
+    async getBreeds ({commit}) {
+      console.log("getting the breeds");
+      const BASE_URL = 'https://api.thecatapi.com/v1/breeds/';
+      try {
+        await axios.get(BASE_URL, {
+          headers: {
+            'x-api-key' : "a8c4e83f-8094-47a5-be11-0b4f9cf386cd" 
+          }
+        }). then(resp => commit('setBreeds', resp.data)
+        );
+      } catch (exception) {
+        throw new Error(`API ${exception}`);
+    }
+    }, 
+    sortBreeds({commit}, command) {
+      commit('sortBreeds', command)
+    },
+    // pass to setRelatedPics mutation to get related breeds other than the selected one
+    getRelatedPics ({commit}, id) {
+      commit('setRelatedPics', id)
+    },
+    // search for the pictures of cat in selected category
+    // pass to the setSelectedCatPics mutation
+    async getSelectedCategoryPictures({commit}, id) {
       console.log(id);
       const BASE_URL = 'https://api.thecatapi.com/v1/images/search?';
           try {
@@ -112,6 +126,8 @@ const store = new Vuex.Store({
             throw new Error(`API ${exception}`);
         }
     },
+    // get 1 picture from the cat api
+    // pass to the setRandomPic mutation
     async getRandomPic({commit}) {
       const BASE_URL = 'https://api.thecatapi.com/v1/images/search?';
           try {
@@ -125,10 +141,6 @@ const store = new Vuex.Store({
           } catch (exception) {
             throw new Error(`API ${exception}`);
         }
-    }, 
-    sortBreeds({commit}) {
-      console.log('sorting breeds')
-      commit('sortBreeds')
     }
   },
   modules: {

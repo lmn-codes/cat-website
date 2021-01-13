@@ -1,7 +1,6 @@
 require = require('esm')(module);
 // const { routes } = require('./src/router/index.ts');
 const SitemapPlugin = require('sitemap-webpack-plugin').default
-// // const routerPaths = require('./src/router/index.ts').default.map(r => r.path).filter(p => !p.match(/\*/))
 
 const routes = [
   {path:'/cat-website/'},
@@ -34,10 +33,4 @@ module.exports = {
       })
     ]
   }
-  // pluginOptions: {
-  //   sitemap: {
-  //       baseURL: this.publicPath,
-  //       routes,
-  //   }
-  // }
 }
