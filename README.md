@@ -1,4 +1,4 @@
-# dtt-test
+# My Cat Shelter
 
 ## Project setup
 ```
